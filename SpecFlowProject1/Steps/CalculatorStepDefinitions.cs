@@ -86,12 +86,7 @@ namespace SpecFlowProject1.Steps
             }
         }
 
-        [Then(@"the test should return (.*)")]
-        public void ThenTheTestShouldReturnNull(object resultObj)
-        {
-            object ans = _scenarioContext.Get<object>("resultObj");
-            ans.Should.Be(resultObj);
-        }
+    
 
 
     }

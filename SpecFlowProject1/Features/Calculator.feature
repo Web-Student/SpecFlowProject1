@@ -47,10 +47,3 @@ Scenario: Divide an integer by a negative integer
 	When the two numbers are divided
 	Then the result should be -3
 
-
-@ Divide a number by zero
-Scenario: Divide an integer by zero
-	Given the first number is -30
-	And the second number is 0
-	When the two numbers are divided
-	Then the test should return null
