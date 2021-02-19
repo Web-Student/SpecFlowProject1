@@ -48,7 +48,7 @@ namespace SpecFlowProject1.Steps
 
             int n1 = _scenarioContext.Get<int>("num1");
             int n2 = _scenarioContext.Get<int>("num2");
-            _scenarioContext.Add("sum", n1 + n2);
+            _scenarioContext.Add("result", n1 + n2);
 
         }
 
@@ -57,7 +57,7 @@ namespace SpecFlowProject1.Steps
         {
             //TODO: implement assert (verification) logic
 
-            int ans = _scenarioContext.Get<int>("sum");
+            int ans = _scenarioContext.Get<int>("result");
             ans.Should().Be(result);
         }
 
@@ -66,8 +66,33 @@ namespace SpecFlowProject1.Steps
         {
             int n1 = _scenarioContext.Get<int>("num1");
             int n2 = _scenarioContext.Get<int>("num2");
-            _scenarioContext.Add("sum", n1 - n2);
+            _scenarioContext.Add("result", n1 - n2);
         }
+
+        [When(@"the two numbers are divided")]
+        public void WhenTheTwoNumbersAreDivided()
+        {
+            int n1 = _scenarioContext.Get<int>("num1");
+            int n2 = _scenarioContext.Get<int>("num2");
+
+            //If the denominator is zero, return null instead
+            if (n2 == 0)
+            {
+                _scenarioContext.Add("resultObj", null);
+            }
+            else
+            {
+                _scenarioContext.Add("result", n1 / n2);
+            }
+        }
+
+        [Then(@"the test should return (.*)")]
+        public void ThenTheTestShouldReturnNull(object resultObj)
+        {
+            object ans = _scenarioContext.Get<object>("resultObj");
+            ans.Should.Be(resultObj);
+        }
+
 
     }
 }

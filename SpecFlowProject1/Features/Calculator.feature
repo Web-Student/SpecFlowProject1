@@ -32,3 +32,25 @@ Scenario: Subtract a larger number from a smaller number
 	And the second number is 32
 	When the two numbers are subtracted
 	Then the result should be -14
+
+@Divide By Smaller Number
+Scenario: Divide a larger integer by a smaller integer
+	Given the first number is 24
+	And the second number is 2
+	When the two numbers are divided
+	Then the result should be 12
+
+@ Divide By a negative number
+Scenario: Divide an integer by a negative integer
+	Given the first number is 10
+	And the second number is -3
+	When the two numbers are divided
+	Then the result should be -3
+
+
+@ Divide a number by zero
+Scenario: Divide an integer by zero
+	Given the first number is -30
+	And the second number is 0
+	When the two numbers are divided
+	Then the test should return null
