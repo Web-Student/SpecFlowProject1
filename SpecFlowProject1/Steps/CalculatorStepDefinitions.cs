@@ -28,7 +28,7 @@ namespace SpecFlowProject1.Steps
 
             _scenarioContext.Add("num1", number);
             tempAns = number;
-            //_scenarioContext.Add("tempAns", number);
+            _scenarioContext.Add("testTempAns", number);
         }
 
         [Given("the second number is (.*)")]
@@ -109,43 +109,61 @@ namespace SpecFlowProject1.Steps
         {
             //Get the previous answer (or num 1)
             int ans = 0;
+            int tAns = _scenarioContext.Get<int>("testTempAns");
 
             //Determine which operator it is.
             if (oper == '*')
             {
-                ans = tempAns * n2;
-                tempAns = ans;
+                //ans = tempAns * n2;
+                ans = tAns * n2;
+
+                //tempAns = ans;
+                _scenarioContext.Set<int>(ans, "testTempAns");
             }
             if (oper == '/')
             {
-                ans = tempAns / n2;
-                tempAns = ans;
+                //ans = tempAns / n2;
+                ans = tAns / n2;
+
+                //tempAns = ans;
+                _scenarioContext.Set<int>(ans, "testTempAns");
             }
             if (oper == '+')
             {
-                ans = tempAns + n2;
-                tempAns = ans;
+                //ans = tempAns + n2;
+                ans = tAns + n2;
+
+                //tempAns = ans;
+                _scenarioContext.Set<int>(ans, "testTempAns");
             }
             if (oper == '-')
             {
-               ans = tempAns - n2;
-               tempAns = ans; 
+                //ans = tempAns - n2;
+                ans = tAns - n2;
+
+                //tempAns = ans; 
+                _scenarioContext.Set<int>(ans, "testTempAns");
             }
             if (oper == '%')
             {
-                ans = tempAns % n2;
-                tempAns = ans;
+                //ans = tempAns % n2;
+                ans = tAns % n2;
+
+                //tempAns = ans;
+                _scenarioContext.Set<int>(ans, "testTempAns");
             }
 
             //Save the answer to both tempAns and final result
             //_scenarioContext.Add("result", ans);
             //_scenarioContext.Add("tempAns", ans);
 
-            if(_scenarioContext.ContainsKey("result"))
+
+            if (_scenarioContext.ContainsKey("result"))
             {
-                _scenarioContext.Remove("result");
+                _scenarioContext.Set<int>(ans, "result");
             }
-            _scenarioContext.Add("result", ans);
+            else
+                _scenarioContext.Add("result", ans);
         }
 
 
