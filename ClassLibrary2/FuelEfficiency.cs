@@ -4,7 +4,7 @@ namespace ClassLibrary2
 {
     public class FuelEfficiency
     {
-        public int calc_mpg(int miles, int gallons)
+        public double calc_mpg(double miles, double gallons)
         {
             return miles / gallons;
         }

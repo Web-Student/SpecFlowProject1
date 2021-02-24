@@ -29,7 +29,7 @@ namespace SpecFlowProject1
         }
 
         [Given(@"Gallons used is (.*)")]
-        public void GivenGallonsUsedIs( p0)
+        public void GivenGallonsUsedIs(double p0)
         {
             _scenarioContext.Add("gallons", p0);
         }
@@ -50,7 +50,7 @@ namespace SpecFlowProject1
         }
 
         [Then(@"the fuel efficiency should be (.*)")]
-        public void ThenTheFuelEfficiencyShouldBe(int p0)
+        public void ThenTheFuelEfficiencyShouldBe(double p0)
         {
             var m = _scenarioContext.Get<double>("mpg");
             m.Should().Be(p0);
