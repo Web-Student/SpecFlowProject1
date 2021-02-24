@@ -19,4 +19,8 @@
     <Folder Include="Hooks\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary2\SharedLib.csproj" />
+  </ItemGroup>
+
 </Project>

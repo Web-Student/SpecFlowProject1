@@ -9,7 +9,7 @@ namespace SpecFlowProject1.Steps
         // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
 
         private readonly ScenarioContext _scenarioContext;
-        public int tempAns = 0;
+        //public int tempAns = 0;
 
         public CalculatorStepDefinitions(ScenarioContext scenarioContext)
         {
@@ -27,7 +27,6 @@ namespace SpecFlowProject1.Steps
             // method. 
 
             _scenarioContext.Add("num1", number);
-            tempAns = number;
             _scenarioContext.Add("testTempAns", number);
         }
 
