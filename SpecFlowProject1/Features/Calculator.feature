@@ -72,4 +72,11 @@ Scenario: test to see if i can divide by zero and catch my exception!
 	When operation / is done to the number 0
 	Then the result should be null
 
+Scenario: try a modulus by zero
+	Given the first number is 9
+	When operation * is done to the number 3
+	And operation % is done to the number 2
+	And operation % is done to the number 0
+	Then the result should be null
+
 

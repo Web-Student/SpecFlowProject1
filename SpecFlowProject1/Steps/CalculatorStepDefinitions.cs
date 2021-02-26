@@ -13,7 +13,22 @@ namespace SpecFlowProject1.Steps
         public class answerNode
         {
             private int number;
-            private bool isNull = false;
+            private bool isNull = false; // indicates if the number should be considered "null" instead of as an integer.
+            // isNull is useful for dividing by zero.
+
+            //empty constructor
+            public answerNode()
+            {
+                number = 0;
+                isNull = false;
+            }
+
+            //constructor that accepts a number and a isNull value
+            public answerNode(int n, bool nullNotNull)
+            {
+                number = n;
+                isNull = nullNotNull;
+            }
 
             public int getNumber()
             {
@@ -75,9 +90,9 @@ namespace SpecFlowProject1.Steps
             // To use the multiline text or the table argument of the scenario,
             // additional string/Table parameters can be defined on the step definition
             // method. 
-
+            answerNode n1 = new answerNode(number, false);
             _scenarioContext.Add("num1", number);
-            _scenarioContext.Add("testTempAns", number);
+            _scenarioContext.Add("testTempAns", n1);
         }
 
         [Given("the second number is (.*)")]
@@ -109,13 +124,22 @@ namespace SpecFlowProject1.Steps
         }
 
         [Then("the result should be (.*)")]
-        public void ThenTheResultShouldBe(int result)
+        public void ThenTheResultShouldBe(object result)
         {
-            int ans = _scenarioContext.Get<int>("result");
+            answerNode ans = _scenarioContext.Get<answerNode>("result");
 
-            //int ans = _scenarioContext.Get<int>("result");
-            System.Console.WriteLine("result shoult be " + result + ", but is " + ans);
-            ans.Should().Be(result);
+            //if the result was supposed to be null, check
+            if (result == null)
+            {
+                //check to see if the answer was null
+                bool isNull = ans.getIsNull();
+                isNull.Should().Be((bool)result);
+            }
+            else
+            {
+                int answer = ans.getNumber();
+                answer.Should().Be((int)result);
+            }
         }
 
         [When(@"the two numbers are subtracted")]
