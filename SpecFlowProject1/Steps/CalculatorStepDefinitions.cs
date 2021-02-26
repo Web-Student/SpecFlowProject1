@@ -9,7 +9,7 @@ namespace SpecFlowProject1.Steps
         // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
 
         private readonly ScenarioContext _scenarioContext;
-        //public int tempAns = 0;
+        private object number = 0;
 
         public CalculatorStepDefinitions(ScenarioContext scenarioContext)
         {
@@ -61,10 +61,9 @@ namespace SpecFlowProject1.Steps
         [Then("the result should be (.*)")]
         public void ThenTheResultShouldBe(int result)
         {
-            //TODO: implement assert (verification) logic
-            
-
             int ans = _scenarioContext.Get<int>("result");
+
+            //int ans = _scenarioContext.Get<int>("result");
             System.Console.WriteLine("result shoult be " + result + ", but is " + ans);
             ans.Should().Be(result);
         }

@@ -9,4 +9,6 @@ namespace ClassLibrary2
             return miles / gallons;
         }
     }
+
+    
 }

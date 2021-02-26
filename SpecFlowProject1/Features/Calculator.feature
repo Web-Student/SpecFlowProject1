@@ -66,3 +66,10 @@ Scenario: Heber assignment 4
 	And operation + is done to the number 10
 	And operation % is done to the number 3
 	Then the result should be 1
+
+Scenario: test to see if i can divide by zero and catch my exception!
+	Given the first number is 10
+	When operation / is done to the number 0
+	Then the result should be null
+
+

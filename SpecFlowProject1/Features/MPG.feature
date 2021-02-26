@@ -17,3 +17,10 @@ Scenario: MPG - repeat
 	And Gallons used is 10.0
 	When calc_mpg is called
 	Then the fuel efficiency should be 8.5
+
+
+Scenario: calculating for gas amount
+	Given Miles driven is less than 100
+	And Gallons used is more than 10
+	When is_gas_hog is called
+	Then this car is a gas hog

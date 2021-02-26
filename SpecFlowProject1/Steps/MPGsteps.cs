@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FluentAssertions;
-//using SharedLib;
 using ClassLibrary2;
 using TechTalk.SpecFlow;
-//using FuelEfficiency.cs;
+
 
 namespace SpecFlowProject1
 {
@@ -55,6 +54,22 @@ namespace SpecFlowProject1
             var m = _scenarioContext.Get<double>("mpg");
             m.Should().Be(p0);
         }
+
+        [Then(@"this car is a gas hog")]
+        public void ThenThisCarIsAGasHog()
+        {
+            double gallonsUsed = _scenarioContext.Get<double>("gallons");
+            double milesUsed = _scenarioContext.Get<double>("miles");
+
+        }
+
+        [When(@"is_gas_hog is called")]
+        [Obsolete]
+        public void WhenIs_Gas_HogIsCalled()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
 
 
     }
