@@ -79,4 +79,12 @@ Scenario: try a modulus by zero
 	And operation % is done to the number 0
 	Then the result should be null
 
+Scenario: : multiple in a row
+	Given the first number is -200
+	When operation % is done to the number 2
+	And operation / is done to the number 0
+	And operation % is done to the number 0
+	And operation + is done to the number 50
+	Then the result should be null
+
 

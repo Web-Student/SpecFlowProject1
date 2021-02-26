@@ -211,8 +211,11 @@ namespace SpecFlowProject1.Steps
                         //set the answer to null!!!!!!!!!
                         ans.setNumber(n2, true); // pass n2 as the number we were trying to divide by (zero).
                     }
-                    ans.setNumber(tAns / n2, false);
-                    _scenarioContext.Set<answerNode>(ans, "testTempAns");
+                    else
+                    {
+                        ans.setNumber(tAns / n2, false);
+                        _scenarioContext.Set<answerNode>(ans, "testTempAns");
+                    }
                 }
                 if (oper == '+')
                 {
@@ -232,8 +235,11 @@ namespace SpecFlowProject1.Steps
                         //set the answer to null!!!!!!!!!
                         ans.setNumber(n2, true); // pass n2 as the number we were trying to modulo by (zero).
                     }
-                    ans.setNumber(tAns % n2, false);
-                    _scenarioContext.Set<answerNode>(ans, "testTempAns");
+                    else
+                    {
+                        ans.setNumber(tAns % n2, false);
+                        _scenarioContext.Set<answerNode>(ans, "testTempAns");
+                    }
                 }
 
                 if (_scenarioContext.ContainsKey("result"))
