@@ -6,7 +6,6 @@ namespace SharedLib
 {
     class CalculatorClass
     {
-        private 
 
     }
 }

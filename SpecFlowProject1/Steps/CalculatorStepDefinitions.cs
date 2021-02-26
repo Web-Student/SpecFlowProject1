@@ -47,7 +47,7 @@ namespace SpecFlowProject1.Steps
             //    }
             //}
 
-            void setNumber(int n, bool shouldBeNull)
+            public void setNumber(int n, bool shouldBeNull)
             {
                 if(shouldBeNull)
                 {
@@ -155,70 +155,66 @@ namespace SpecFlowProject1.Steps
         [When(@"operation (.*) is done to the number (.*)")]
         public void WhenOperation_IsDoneToTheNumber(char oper, int n2)
         {
-            //Get the previous answer (or num 1)
-            object ans = 0;
-            object tAns = _scenarioContext.Get<int>("testTempAns"); // come back and fix this line!!!!!
-
+            //get the previous answer
             answerNode tempAns = _scenarioContext.Get<answerNode>("testTempAns");
+
             if (tempAns.getIsNull())
             {
                 //then the previous answer was null, and the only thing I can do about it is to continue to make the answer null.
                 return;
             }
-            else // proceed to process the array.
+            //tempAns must be an int, because it was not null.
+            // proceed to process the number and perform a calculator operation.
+            else
             {
+
+                int tAns = tempAns.getNumber();
+
+                answerNode ans = new answerNode(); // to hold temporary answer.
+
                 //Determine which operator it is.
                 if (oper == '*')
                 {
-                    ans = tAns * n2;
+                    ans.setNumber(tAns * n2, false); //set the number as the product, false because does not need to be set to null.
 
-                    _scenarioContext.Set<object>(ans, "testTempAns");
+                    _scenarioContext.Set<answerNode>(ans, "testTempAns");
                 }
                 if (oper == '/')
                 {
                     //We are not allowed to divide by zero!!!!!!!!! Return null
                     if (n2 == 0)
                     {
-                        ans = null;
+                        //set the answer to null!!!!!!!!!
+                        ans.setNumber(n2, true); // pass n2 as the number we were trying to divide by (zero).
                     }
-                    ans = tAns / n2;
-
-                    //tempAns = ans;
-                    _scenarioContext.Set<int>(ans, "testTempAns");
+                    ans.setNumber(tAns / n2, false);
+                    _scenarioContext.Set<answerNode>(ans, "testTempAns");
                 }
                 if (oper == '+')
                 {
-                    //ans = tempAns + n2;
-                    ans = tAns + n2;
-
-                    //tempAns = ans;
-                    _scenarioContext.Set<int>(ans, "testTempAns");
+                    ans.setNumber(tAns + n2, false);
+                    _scenarioContext.Set<answerNode>(ans, "testTempAns");
                 }
                 if (oper == '-')
                 {
-                    //ans = tempAns - n2;
-                    ans = tAns - n2;
-
-                    //tempAns = ans; 
-                    _scenarioContext.Set<int>(ans, "testTempAns");
+                    ans.setNumber(tAns - n2, false);
+                    _scenarioContext.Set<answerNode>(ans, "testTempAns");
                 }
                 if (oper == '%')
                 {
-                    //ans = tempAns % n2;
-                    ans = tAns % n2;
-
-                    //tempAns = ans;
-                    _scenarioContext.Set<int>(ans, "testTempAns");
+                    //We are not allowed to divide by zero!!!!!!!!! Return null
+                    if (n2 == 0)
+                    {
+                        //set the answer to null!!!!!!!!!
+                        ans.setNumber(n2, true); // pass n2 as the number we were trying to modulo by (zero).
+                    }
+                    ans.setNumber(tAns % n2, false);
+                    _scenarioContext.Set<answerNode>(ans, "testTempAns");
                 }
-
-                //Save the answer to both tempAns and final result
-                //_scenarioContext.Add("result", ans);
-                //_scenarioContext.Add("tempAns", ans);
-
 
                 if (_scenarioContext.ContainsKey("result"))
                 {
-                    _scenarioContext.Set<int>(ans, "result");
+                    _scenarioContext.Set<answerNode>(ans, "result");
                 }
                 else
                     _scenarioContext.Add("result", ans);
