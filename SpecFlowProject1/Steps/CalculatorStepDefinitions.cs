@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using System;
 using TechTalk.SpecFlow;
 
 namespace SpecFlowProject1.Steps
@@ -9,7 +10,56 @@ namespace SpecFlowProject1.Steps
         // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
 
         private readonly ScenarioContext _scenarioContext;
-        private object number = 0;
+        public class answerNode
+        {
+            private int number;
+            private bool isNull = false;
+
+            public int getNumber()
+            {
+                return number;
+            }
+            public bool getIsNull()
+            {
+                return isNull;
+            }
+
+            //public int asInt;
+            //void setNumber(object objPassedIn)
+            //{
+            //    //One potential problem with this is if the answer is zero
+            //    int num = Convert.ToInt32(objPassedIn);
+
+            //    //if num is not zero, save it as the number
+            //    if(num != 0)
+            //    {
+            //        number = num;
+            //    }
+            //    // if num is zero, either the string is null, the int is zero, or it is some other format.
+            //    else if(objPassedIn == null)
+            //    {
+            //        isNull = true;
+            //    }
+                
+            //    else if((int)objPassedIn == 0) // if the zero truly is the integer value, we can type cast it to an int.
+            //    {
+            //        number = 0;
+            //    }
+            //}
+
+            void setNumber(int n, bool shouldBeNull)
+            {
+                if(shouldBeNull)
+                {
+                    isNull = true;
+                }
+                else
+                {
+                    isNull = false;
+                    number = n;
+                }
+            }
+        }
 
         public CalculatorStepDefinitions(ScenarioContext scenarioContext)
         {
@@ -106,62 +156,73 @@ namespace SpecFlowProject1.Steps
         public void WhenOperation_IsDoneToTheNumber(char oper, int n2)
         {
             //Get the previous answer (or num 1)
-            int ans = 0;
-            int tAns = _scenarioContext.Get<int>("testTempAns");
+            object ans = 0;
+            object tAns = _scenarioContext.Get<int>("testTempAns"); // come back and fix this line!!!!!
 
-            //Determine which operator it is.
-            if (oper == '*')
+            answerNode tempAns = _scenarioContext.Get<answerNode>("testTempAns");
+            if (tempAns.getIsNull())
             {
-                //ans = tempAns * n2;
-                ans = tAns * n2;
-
-                //tempAns = ans;
-                _scenarioContext.Set<int>(ans, "testTempAns");
+                //then the previous answer was null, and the only thing I can do about it is to continue to make the answer null.
+                return;
             }
-            if (oper == '/')
+            else // proceed to process the array.
             {
-                //ans = tempAns / n2;
-                ans = tAns / n2;
+                //Determine which operator it is.
+                if (oper == '*')
+                {
+                    ans = tAns * n2;
 
-                //tempAns = ans;
-                _scenarioContext.Set<int>(ans, "testTempAns");
+                    _scenarioContext.Set<object>(ans, "testTempAns");
+                }
+                if (oper == '/')
+                {
+                    //We are not allowed to divide by zero!!!!!!!!! Return null
+                    if (n2 == 0)
+                    {
+                        ans = null;
+                    }
+                    ans = tAns / n2;
+
+                    //tempAns = ans;
+                    _scenarioContext.Set<int>(ans, "testTempAns");
+                }
+                if (oper == '+')
+                {
+                    //ans = tempAns + n2;
+                    ans = tAns + n2;
+
+                    //tempAns = ans;
+                    _scenarioContext.Set<int>(ans, "testTempAns");
+                }
+                if (oper == '-')
+                {
+                    //ans = tempAns - n2;
+                    ans = tAns - n2;
+
+                    //tempAns = ans; 
+                    _scenarioContext.Set<int>(ans, "testTempAns");
+                }
+                if (oper == '%')
+                {
+                    //ans = tempAns % n2;
+                    ans = tAns % n2;
+
+                    //tempAns = ans;
+                    _scenarioContext.Set<int>(ans, "testTempAns");
+                }
+
+                //Save the answer to both tempAns and final result
+                //_scenarioContext.Add("result", ans);
+                //_scenarioContext.Add("tempAns", ans);
+
+
+                if (_scenarioContext.ContainsKey("result"))
+                {
+                    _scenarioContext.Set<int>(ans, "result");
+                }
+                else
+                    _scenarioContext.Add("result", ans);
             }
-            if (oper == '+')
-            {
-                //ans = tempAns + n2;
-                ans = tAns + n2;
-
-                //tempAns = ans;
-                _scenarioContext.Set<int>(ans, "testTempAns");
-            }
-            if (oper == '-')
-            {
-                //ans = tempAns - n2;
-                ans = tAns - n2;
-
-                //tempAns = ans; 
-                _scenarioContext.Set<int>(ans, "testTempAns");
-            }
-            if (oper == '%')
-            {
-                //ans = tempAns % n2;
-                ans = tAns % n2;
-
-                //tempAns = ans;
-                _scenarioContext.Set<int>(ans, "testTempAns");
-            }
-
-            //Save the answer to both tempAns and final result
-            //_scenarioContext.Add("result", ans);
-            //_scenarioContext.Add("tempAns", ans);
-
-
-            if (_scenarioContext.ContainsKey("result"))
-            {
-                _scenarioContext.Set<int>(ans, "result");
-            }
-            else
-                _scenarioContext.Add("result", ans);
         }
 
 
